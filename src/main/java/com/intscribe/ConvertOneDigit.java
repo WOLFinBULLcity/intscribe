@@ -17,9 +17,11 @@ public class ConvertOneDigit implements ConversionStrategy {
    */
   @Override
   public String convertNumber() {
+    // Check our Enum for the value and get the English word for the integer.
     if (WordsForNumbers.valueOf(this.number).isPresent()) {
       return WordsForNumbers.valueOf(this.number).get().getName();
     }
-    return "";
+    // If we get here something went wrong
+    throw new IndexOutOfBoundsException("Unexpected number. Number outside of range: " + this.number);
   }
 }

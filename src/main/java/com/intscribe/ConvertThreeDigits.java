@@ -24,16 +24,20 @@ public class ConvertThreeDigits implements ConversionStrategy {
     int firstDigit = this.number / 100;
     int lastDigits = this.number % 100;
 
+    // Check if we have a prefix word for this number.
     String prefix = "";
     if (firstDigit > 0) {
       prefix += (new ConvertOneDigit(firstDigit).convertNumber() + " " + HUNDRED);
     }
 
+    // Get the words for the remaining digits.
     String moreDigits = new ConvertTwoDigits(lastDigits).convertNumber();
 
+    // Check if we have both prefix and digit words. If so, we'll need to insert a space.
     boolean spaceRequired = !EMPTY.equals(prefix) && !EMPTY.equals(moreDigits);
     String spaceIfNeeded = spaceRequired ? " " : "";
 
+    // Piece together the prefix with the remaining digits.
     return prefix + spaceIfNeeded + moreDigits;
   }
 }

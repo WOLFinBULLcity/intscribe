@@ -20,6 +20,9 @@ public class ConvertAllDigits implements ConversionStrategy {
       throw new IllegalArgumentException("Number not in range [-999999..999999]: " + number);
     }
 
+    // Check if the number is negative and update our sign prefix.
+    // Then, take the absolute value of the number to pass along to downstream conversions.
+    // (We only want to say the word "negative" one time)
     this.sign = "";
     if (number < 0) {
       this.sign += (NEGATIVE + " ");
@@ -34,6 +37,7 @@ public class ConvertAllDigits implements ConversionStrategy {
    */
   @Override
   public String convertNumber() {
+    // If the integer is 0, we're done here.
     if (this.number == 0) {
       return ZERO;
     }
@@ -54,9 +58,11 @@ public class ConvertAllDigits implements ConversionStrategy {
     int hundredsDigits = this.number % 1000;
 
     if (hundredsDigits > 0) {
+      // We have hundreds digits to convert.
       hundredsWords += new ConvertThreeDigits(hundredsDigits).convertNumber();
     }
 
+    // Generate the full string for the integer.
     String result = sign + thousandsWords + hundredsWords;
 
     // Trim any trailing whitespace that can occur for certain numbers.

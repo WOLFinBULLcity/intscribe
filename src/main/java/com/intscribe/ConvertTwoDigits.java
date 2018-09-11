@@ -25,11 +25,13 @@ public class ConvertTwoDigits implements ConversionStrategy {
       if (WordsForNumbers.valueOf(this.number).isPresent()) {
         return WordsForNumbers.valueOf(this.number).get().getName();
       }
-      return "";
+      // If we get here something went wrong
+      throw new IndexOutOfBoundsException("Unexpected number. Number outside of range: " + this.number);
     }
     int prefixDigit = this.number / 10;
     String prefix = "";
 
+    // Check if we have a prefix word for this number.
     if (WordsForNumberPrefixes.valueOf(prefixDigit).isPresent()) {
       prefix = WordsForNumberPrefixes.valueOf(prefixDigit).get().getName();
     }
